@@ -1,0 +1,14 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "MobileApp",
+	"webDir": "www",
+	"bundledWebRuntime": false,
+
+  "server": {
+    "androidScheme": "http",
+    "cleartext": true,
+    "allowNavigation": [
+      "http://192.168.1.4:8082/procumentary/*"
+    ]
+  }
+}

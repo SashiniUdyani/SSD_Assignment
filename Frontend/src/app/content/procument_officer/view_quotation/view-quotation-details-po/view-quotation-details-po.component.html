@@ -1,0 +1,85 @@
+<app-alert-box *ngIf="alertBox.alert" [alertMsg]="alertBox"></app-alert-box>
+<div class="row" style="margin-top: 75px;margin-left: 0px;margin-right: 0px">
+  <div style="margin-top: 20px">
+    <i class="fa fa-arrow-left" style="font-size: 30px" [routerLink]="'/view_quotation_suppliers_po'"></i>
+  </div>
+  <div style="margin-top: 20px;display: flex">
+    <div style="font-weight: bold;color: #b68003;font-size: 21px;width: calc(100% - 250px)">Quotation Details (Procument
+      Officer)
+    </div>
+    <div style="width: 250px;display: flex">
+      <input type="text" class="form-control" style="border-radius: 20px" placeholder="Search">
+      <i class="fa fa-search" style="font-size: 20px;padding: 10px 10px 10px 15px"></i>
+    </div>
+  </div>
+  <div>
+    <select class="form-control" style="width: 200px">
+      <option value="">Filter</option>
+      <option value="">Sub Total</option>
+    </select>
+  </div>
+</div>
+
+<div class="row" style="border-top: 1px solid #aeaeae;margin: 10px">
+  <div class="col-12">
+
+    <div style="margin-top: 10px;text-align: right">
+      <span style="font-weight: bold">R. -</span> Requested,
+      <span style="font-weight: bold"> N. -</span> New
+    </div>
+    <table class="table" width="100%" border="1px solid black">
+      <thead class="thead-dark">
+      <th>Item No</th>
+      <th>Item Name</th>
+      <th>Item Type</th>
+      <th>R.Unit Price</th>
+      <th>N.Unit Price</th>
+      <th>R.Quantity</th>
+      <th>N.Quantity</th>
+      <th>Total</th>
+      <th>Status</th>
+      </thead>
+      <tbody>
+      <tr *ngFor="let orderDetail of orderDetails;let i = index">
+        <td>{{orderDetail.id}}</td>
+        <td>{{orderDetail.material.itemName}}</td>
+        <td>{{orderDetail.material.itemType}}</td>
+        <td>{{orderDetail.poUnitPrice | number : '1.2-2'}}</td>
+        <td>{{orderDetail.soUnitPrice | number : '1.2-2'}}</td>
+        <td>{{orderDetail.poQuantity}}</td>
+        <td>{{orderDetail.soQuantity}}</td>
+        <td>{{(orderDetail.soUnitPrice * orderDetail.soQuantity) | number : '1.2-2'}}</td>
+        <td style="text-align: center" *ngIf="orderDetail.status==='Complete'">
+          <i class="fa fa-check"></i>
+        </td>
+        <td style="text-align: center" *ngIf="orderDetail.status==='Incomplete'">
+          <i class="fa fa-times"></i>
+        </td>
+      </tr>
+      <!--<tr *ngFor="let pump of orders;let i = index">-->
+      <!--<td>{{i+1}}</td>-->
+      <!--<td>{{pump.pumpedAtFormatted}}</td>-->
+      <!--<td>{{pump.fuelType.name}}</td>-->
+      <!--<td>{{pump.fuelPumped}}L {{pump.fullTanked?'/ Full':''}}</td>-->
+      <!--<td>{{pump.fuelStation.name}}</td>-->
+      <!--</tr>-->
+      </tbody>
+    </table>
+  </div>
+
+  <div style="text-align: right">
+    <span style="font-weight: bold">R.Total : </span>
+    <span>{{totalR | number : '1.2-2'}}</span>
+  </div>
+
+  <div style="text-align: right">
+    <span style="font-weight: bold">N.Total : </span>
+    <span>{{totalN | number : '1.2-2'}}</span>
+  </div>
+
+  <div style="margin-top: 20px;text-align: right">
+    <button class="btn btn-success" style="margin-right: 10px" (click)="finalizeSupplier()">Finalize Supplier</button>
+  </div>
+
+</div>
+

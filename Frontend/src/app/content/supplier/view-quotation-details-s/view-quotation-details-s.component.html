@@ -1,0 +1,102 @@
+<app-alert-box *ngIf="alertBox.alert" [alertMsg]="alertBox"></app-alert-box>
+<div class="row" style="margin-top: 75px;margin-left: 0px;margin-right: 0px">
+  <div style="margin-top: 20px">
+    <i class="fa fa-arrow-left" style="font-size: 30px" [routerLink]="'/view_quotations_s'"></i>
+  </div>
+  <div style="margin-top: 20px;display: flex">
+    <div style="font-weight: bold;color: #b68003;font-size: 21px;width: calc(100% - 250px)">Quotation Details (Supplier)</div>
+    <div style="width: 250px;display: flex">
+      <input type="text" class="form-control" style="border-radius: 20px" placeholder="Search">
+      <i class="fa fa-search" style="font-size: 20px;padding: 10px 10px 10px 15px"></i>
+    </div>
+  </div>
+  <div>
+    <select class="form-control" style="width: 200px">
+      <option value="">Filter</option>
+      <option value="">Sub Total</option>
+    </select>
+  </div>
+</div>
+
+<div class="row" style="border-top: 1px solid #aeaeae;margin: 10px">
+  <div style="margin-top: 20px">
+    <span style="font-weight: bold">Purchase Order Reference : </span>
+    <span>PO{{order.id}}</span>
+  </div>
+
+  <div class="col-12">
+
+    <div style="margin-top: 10px;text-align: right">
+      <span style="font-weight: bold">R. -</span> Requested,
+      <span style="font-weight: bold"> N. -</span> New
+    </div>
+    <table class="table" width="100%" border="1px solid black">
+      <thead class="thead-dark">
+      <th>Item No</th>
+      <th>Item Name</th>
+      <th>Item Type</th>
+      <th>R.Unit Price</th>
+      <th>N.Unit Price</th>
+      <th>R.Quantity</th>
+      <th>N.Quantity</th>
+      <th>Total</th>
+      <th>Status</th>
+      </thead>
+      <tbody>
+      <!--<tr>-->
+      <!--<td>123</td>-->
+      <!--<td>ABC</td>-->
+      <!--<td>Drink</td>-->
+      <!--<td><input type="text" value="12"></td>-->
+      <!--<td>5</td>-->
+      <!--<td>60</td>-->
+      <!--<td>Completed</td>-->
+      <!--</tr>-->
+      <tr *ngFor="let orderDetail of orderDetails;let i = index">
+        <td>{{orderDetail.id}}</td>
+        <td>{{orderDetail.material.itemName}}</td>
+        <td>{{orderDetail.material.itemType}}</td>
+        <td>{{orderDetail.poUnitPrice | number : '1.2-2'}}</td>
+        <td>
+          <input type="number" [(ngModel)]="orderDetail.soUnitPrice"
+                 (change)="calcTotal()">
+        </td>
+        <!--<td>{{orderDetail.soUnitPrice}}</td>-->
+        <td>{{orderDetail.poQuantity}}</td>
+        <td>
+          <input type="number" [(ngModel)]="orderDetail.soQuantity"
+                 (change)="calcTotal()">
+        </td>
+        <!--<td>{{orderDetail.soQuantity}}</td>-->
+        <td>{{(orderDetail.soUnitPrice * orderDetail.soQuantity) | number : '1.2-2'}}</td>
+        <td style="text-align: center" *ngIf="orderDetail.status==='Complete'"
+            (click)="orderDetail.status='Incomplete'">
+          <i class="fa fa-check"></i>
+        </td>
+        <td style="text-align: center" *ngIf="orderDetail.status==='Incomplete'"
+            (click)="orderDetail.status='Complete'">
+          <i class="fa fa-times"></i>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div style="text-align: right">
+    <span style="font-weight: bold">R.Total : </span>
+    <span>{{totalR | number : '1.2-2'}}</span>
+  </div>
+
+  <div style="text-align: right">
+    <span style="font-weight: bold">N.Total : </span>
+    <span>{{totalN | number : '1.2-2'}}</span>
+  </div>
+
+  <div style="margin-top: 20px;text-align: right">
+    <button class="btn btn-warning" style="margin-left: 20px"
+            (click)="finalizeQuotation()">
+      Finalize Quotation
+    </button>
+  </div>
+
+</div>

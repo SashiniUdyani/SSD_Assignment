@@ -1,0 +1,143 @@
+<div class="row" style="margin-top: 75px;margin-left: 0px;margin-right: 0px">
+  <div style="margin-top: 20px">
+    <i class="fa fa-arrow-left" style="font-size: 30px" [routerLink]="'/view_pr'"></i>
+  </div>
+  <div style="margin-top: 20px;display: flex">
+    <div style="font-weight: bold;color: #b68003;font-size: 21px;width: calc(100% - 250px)">Order Details (Site Manager)</div>
+    <div style="width: 250px;display: flex">
+      <input type="text" class="form-control" style="border-radius: 20px" placeholder="Search">
+      <i class="fa fa-search" style="font-size: 20px;padding: 10px 10px 10px 15px"></i>
+    </div>
+  </div>
+  <div>
+    <select class="form-control" style="width: 200px">
+      <option value="">Filter</option>
+      <option value="">Sub Total</option>
+    </select>
+  </div>
+</div>
+
+<div class="row" style="border-top: 1px solid #aeaeae;margin: 10px">
+  <div class="col-12">
+
+    <div style="text-align: right">
+      <button class="btn btn-warning" (click)="isTrueOrFalseDetails(true)" style="margin-top: 20px">Add Item</button>
+    </div>
+    <div style="margin-top: 10px;text-align: right">
+      <span style="font-weight: bold">R. -</span> Requested,
+      <span style="font-weight: bold"> N. -</span> New
+    </div>
+    <table class="table" width="100%" border="1px solid black">
+      <thead class="thead-dark">
+      <th>Item No</th>
+      <th>Item Name</th>
+      <th>Item Type</th>
+      <th>R.Unit Price</th>
+      <th>N.Unit Price</th>
+      <th>R.Quantity</th>
+      <th>N.Quantity</th>
+      <th>Total</th>
+      <th style="text-align: center">Status</th>
+      </thead>
+      <tbody>
+      <tr *ngFor="let orderDetail of orderDetails;let i = index">
+        <td>{{orderDetail.id}}</td>
+        <td>{{orderDetail.material.itemName}}</td>
+        <td>{{orderDetail.material.itemType}}</td>
+        <td>{{orderDetail.poUnitPrice | number : '1.2-2'}}</td>
+        <td>{{orderDetail.soUnitPrice | number : '1.2-2'}}</td>
+        <td>{{orderDetail.poQuantity}}</td>
+        <td>{{orderDetail.soQuantity}}</td>
+        <td>{{(orderDetail.poUnitPrice * orderDetail.poQuantity) | number : '1.2-2'}}</td>
+        <td style="text-align: center" *ngIf="orderDetail.status==='Complete'">
+          <i class="fa fa-check"></i>
+        </td>
+        <td style="text-align: center" *ngIf="orderDetail.status==='Incomplete'">
+          <i class="fa fa-times"></i>
+        </td>
+      </tr>
+      <!--<tr *ngFor="let pump of orders;let i = index">-->
+      <!--<td>{{i+1}}</td>-->
+      <!--<td>{{pump.pumpedAtFormatted}}</td>-->
+      <!--<td>{{pump.fuelType.name}}</td>-->
+      <!--<td>{{pump.fuelPumped}}L {{pump.fullTanked?'/ Full':''}}</td>-->
+      <!--<td>{{pump.fuelStation.name}}</td>-->
+      <!--</tr>-->
+      </tbody>
+    </table>
+  </div>
+
+  <div style="text-align: right">
+    <span style="font-weight: bold">Total : </span>
+    <span>{{total | number : '1.2-2'}}</span>
+  </div>
+
+  <div style="margin-top: 20px">
+    <div style="font-weight: bold">Notes</div>
+    <div>
+      <textarea readonly class="form-control" cols="30" rows="4" [(ngModel)]="order.deliverNote"></textarea>
+    </div>
+  </div>
+
+  <div style="margin-top: 20px">
+    <div style="font-weight: bold">Handling Instructions</div>
+    <div>
+      <textarea readonly class="form-control" cols="30" rows="4" [(ngModel)]="order.handlingInstruction"></textarea>
+    </div>
+  </div>
+
+  <!--<div style="margin-top: 20px;text-align: right">-->
+    <!--<button class="btn btn-success" style="margin-right: 10px" (click)="editPR()">Edit PR</button>-->
+  <!--</div>-->
+
+</div>
+
+
+<div class="modalTable" *ngIf="isModalTableDetails.openTable">
+  <div (click)="isTrueOrFalseDetails(false)"></div>
+  <div>
+    <div class="selectChild" id="imageActivitySize"
+         style="max-height: calc(100vh - 60px);overflow-y: hidden;margin-left: 60px;margin-right: 10px;margin-top: 100px;">
+      <div style="position: absolute;z-index: 99;right: 10px;top: 10px;">
+        <i class="fas fa-times" style="cursor: pointer" (click)="isTrueOrFalseDetails(false)"></i>
+      </div>
+
+      <div class="row" style="padding: 40px">
+        <div class="col-6">
+          <span>Item No</span>
+          <span style="display: flex">
+            <input type="text" class="form-control" [(ngModel)]="item.id">
+            <i class="fa fa-search" style="padding-top: 10px;padding-left: 10px" (click)="getItemById()"></i>
+          </span>
+        </div>
+        <div class="col-6">
+          <span>Item Name</span>
+          <span>
+            <input type="text" class="form-control" [(ngModel)]="item.itemName">
+          </span>
+        </div>
+        <div class="col-6">
+          <span>Item Type</span>
+          <span>
+            <input type="text" class="form-control" [(ngModel)]="item.itemType">
+          </span>
+        </div>
+        <div class="col-6">
+          <span>Quantity</span>
+          <span>
+            <input type="number" class="form-control" [(ngModel)]="item.poQuantity">
+          </span>
+        </div>
+        <div class="col-6">
+          <span>Unit Price</span>
+          <span>
+            <input type="number" class="form-control" [(ngModel)]="item.poUnitPrice">
+          </span>
+        </div>
+      </div>
+      <div style="text-align: right">
+        <button class="btn btn-success" (click)="addItem()">Add Item</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,40 @@
+<div class="row" style="margin-top: 75px;margin-left: 0px;margin-right: 0px">
+  <div style="margin-top: 20px">
+    <i class="fa fa-arrow-left" style="font-size: 30px" [routerLink]="'/view_quotations_po'"></i>
+  </div>
+  <div style="margin-top: 20px;display: flex">
+    <div style="font-weight: bold;color: #b68003;font-size: 21px;width: calc(100% - 250px)">Suppliers (Procument
+      Officer)
+    </div>
+  </div>
+</div>
+
+<div class="row" style="border-top: 1px solid #aeaeae;margin: 10px">
+  <div class="col-12">
+    <div style="margin-top: 10px;text-align: right">
+      <span style="font-weight: bold">R. -</span> Requested,
+      <span style="font-weight: bold"> N. -</span> New
+    </div>
+    <table class="table" width="100%" border="1px solid black">
+      <thead class="thead-dark">
+      <th>Supplier ID</th>
+      <th>Supplier Name</th>
+      <th>R.Total</th>
+      <th>N.Total</th>
+      <th style="text-align: center">Quotation Details</th>
+      </thead>
+      <tbody>
+      <tr *ngFor="let supplier of suppliers;let i = index">
+        <td>{{supplier.id}}</td>
+        <td>{{supplier.name}}</td>
+        <td>{{calcTotalP(supplier) | number : '1.2-2'}}</td>
+        <td>{{calcTotalS(supplier) | number : '1.2-2'}}</td>
+        <td style="text-align: center;">
+          <i class="fa fa-arrow-right" (click)="sendToSupplier(supplier)"></i>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>

@@ -1,0 +1,44 @@
+<app-alert-box *ngIf="alertBox.alert" [alertMsg]="alertBox"></app-alert-box>
+<div class="row" style="margin-top: 75px;margin-left: 0px;margin-right: 0px">
+  <div style="margin-top: 20px;display: flex">
+    <div style="font-weight: bold;color: #b68003;font-size: 21px;width: calc(100% - 250px)">
+      Quotations (Procument Officer)
+    </div>
+    <div style="width: 250px;display: flex">
+      <input type="text" class="form-control" style="border-radius: 20px" placeholder="Search">
+      <i class="fa fa-search" style="font-size: 20px;padding: 10px 10px 10px 15px"></i>
+    </div>
+  </div>
+  <div>
+    <select class="form-control" style="width: 200px">
+      <option value="">Filter</option>
+      <option value="">Sub Total</option>
+    </select>
+  </div>
+</div>
+
+<div class="row" style="border-top: 1px solid #aeaeae;margin: 10px">
+  <div class="col-12">
+
+    <table class="table" width="100%" style="margin-top: 20px" border="1px solid black">
+      <thead class="thead-dark">
+      <th>Order No</th>
+      <th>Order Date</th>
+      <!--<th>Total</th>-->
+      <th style="text-align: center">Quotation Suppliers</th>
+      </thead>
+      <tbody>
+      <tr *ngFor="let order of orders;let i = index">
+        <td>SO{{order.id}}</td>
+        <td>{{order.addedAt}}</td>
+        <!--<td>{{order.supplier.name}}</td>-->
+        <!--<td>{{calcTotal(order)}}</td>-->
+        <!--<td>{{order.soStatus}}</td>-->
+        <td style="text-align: center">
+          <i class="fa fa-arrow-right" (click)="viewSO(order)"></i></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
